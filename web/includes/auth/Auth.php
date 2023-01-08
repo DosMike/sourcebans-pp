@@ -33,7 +33,7 @@ class Auth
         self::insertNewToken($jti, $secret);
         self::updateLastVisit($aid);
 
-        self::setCookie($token, time() + $maxlife, Host::domain(), ((bool)$_SERVER['HTTPS']) ? true : false);
+        self::setCookie($token, time() + $maxlife, Host::domain(), ((bool)($_SERVER['HTTPS']??false)) ? true : false);
 
         //Login / Logout requests will trigger GC routine
         self::gc();
@@ -192,7 +192,7 @@ class Auth
     private static function getJWTFromCookie()
     {
         if (isset($_COOKIE['sbpp_auth'])) {
-            return filter_var($_COOKIE['sbpp_auth'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+            return filter_var($_COOKIE['sbpp_auth'], FILTER_UNSAFE_RAW, FILTER_FLAG_NO_ENCODE_QUOTES);
         }
 
         return '';

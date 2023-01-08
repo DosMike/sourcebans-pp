@@ -22,10 +22,10 @@ if (isset($_POST['dash_intro_text'])) {
 }
 //Filter all user inputs
 //Should be changed to individual filtering
-$_GET = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-$_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-$_COOKIE = filter_input_array(INPUT_COOKIE, FILTER_SANITIZE_STRING);
-//$_SERVER = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
+$_GET = filter_input_array(INPUT_GET, FILTER_UNSAFE_RAW);
+$_POST = filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW);
+$_COOKIE = filter_input_array(INPUT_COOKIE, FILTER_UNSAFE_RAW);
+//$_SERVER = filter_input_array(INPUT_SERVER, FILTER_UNSAFE_RAW);
 
 // ---------------------------------------------------
 //  Directories

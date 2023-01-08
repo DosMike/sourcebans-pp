@@ -12,7 +12,7 @@ class NormalAuthHandler
 
         $maxlife = (($remember) ? Config::get('auth.maxlife.remember') : Config::get('auth.maxlife'))*60;
 
-        if (!empty($password) && (!empty($user['password']) || !is_null($user['password']))) {
+        if (!empty($password) && $user !== false && (!empty($user['password']) || !is_null($user['password']))) {
             if ($this->checkPassword($password, $user['password'])) {
                 $this->result = true;
                 Auth::login($user['aid'], $maxlife);

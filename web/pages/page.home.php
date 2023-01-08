@@ -38,7 +38,7 @@ $blcount               = 0;
 while (!$res->EOF) {
     $info               = array();
     $info['date']       = Config::time($res->fields[1]);
-    $info['name']       = stripslashes(filter_var($res->fields[0], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES));
+    $info['name']       = stripslashes(filter_var($res->fields[0], FILTER_UNSAFE_RAW, FILTER_FLAG_NO_ENCODE_QUOTES));
     $info['short_name'] = trunc($info['name'], 40);
     $info['auth']       = $res->fields['authid'];
     $info['ip']         = $res->fields['ip'];
@@ -75,6 +75,8 @@ $res  = $GLOBALS['db']->Execute("SELECT bid, ba.ip, ba.authid, ba.name, created,
 $bans = array();
 while (!$res->EOF) {
     $info = array();
+    $info['temp']     = false;
+    $info['perm']     = false;
     if ($res->fields['length'] == 0) {
         $info['perm']     = true;
         $info['unbanned'] = false;
@@ -130,6 +132,8 @@ $res   = $GLOBALS['db']->Execute("SELECT bid, ba.authid, ba.type, ba.name, creat
 $comms = array();
 while (!$res->EOF) {
     $info = array();
+    $info['perm']     = false;
+    $info['temp']     = false;
     if ($res->fields['length'] == 0) {
         $info['perm']     = true;
         $info['unbanned'] = false;

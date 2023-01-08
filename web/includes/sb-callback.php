@@ -3203,7 +3203,7 @@ function BanFriends($friendid, $name)
     set_time_limit(0);
     global $userbank, $username;
     $objResponse = new xajaxResponse();
-    $name = filter_var($name, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    $name = filter_var($name, FILTER_UNSAFE_RAW, FILTER_FLAG_NO_ENCODE_QUOTES);
     if (!Config::getBool('config.enablefriendsbanning') || !is_numeric($friendid)) {
         return $objResponse;
     }
@@ -3253,7 +3253,7 @@ function BanFriends($friendid, $name)
         $GLOBALS['PDO']->bindMultiple(
             [
             ':authid' => $steam,
-            ':name' => filter_var($fname, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES),
+            ':name' => filter_var($fname, FILTER_UNSAFE_RAW, FILTER_FLAG_NO_ENCODE_QUOTES),
             ':reason' => "Steam Community Friend Ban (".$name.")",
             ':aid' => $userbank->GetAid(),
             ':admip' => $_SERVER['REMOTE_ADDR']
